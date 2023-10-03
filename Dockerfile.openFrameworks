@@ -1,0 +1,19 @@
+FROM ubuntu:22.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG OF_DIR=./openFrameworks/release
+ARG OF_DEPENDENCIES=scripts/linux/ubuntu/install_dependencies.sh
+ARG OF_FOLDER_NAME=oF
+
+COPY ${OF_DIR} /oF
+
+RUN apt-get update
+RUN apt-get install software-properties-common -y
+RUN /${OF_FOLDER_NAME}/${OF_DEPENDENCIES} -y
+RUN /${OF_FOLDER_NAME}/scripts/linux/compileOF.sh -j16
+
+WORKDIR /${OF_FOLDER_NAME}/apps/projectGenerator/commandLine
+RUN make -j16
+WORKDIR /
+
+RUN apt-get clean
