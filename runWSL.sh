@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 hostApps=${1:-"$(pwd)/../openframeworks-apps"}
 
 docker run -it \
